@@ -14,7 +14,7 @@ class CestaResource extends JsonResource
             'usuario' => [
                 'id' => $this->user->id,
                 'nombre' => $this->user->name,
-                'email' => $this->user->email,
+                'correo' => $this->user->email,
             ],
             'productos' => $this->productosIngresados->map(function ($producto) {
                 $precio = (float) $producto->pivot->precio_unitario;

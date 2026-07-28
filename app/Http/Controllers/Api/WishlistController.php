@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
  *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="nombre", type="string", example="Juan Garcia"),
- *     @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+ *     @OA\Property(property="correo", type="string", format="email", example="juan@example.com"),
  *     @OA\Property(
  *         property="desea",
  *         type="array",
@@ -107,7 +107,7 @@ class WishlistController extends Controller
      * @OA\Post(
      *     path="/api/deseos",
      *     summary="Añadir un producto a la wishlist",
-     *     description="Añade un producto a la wishlist de un usuario. Si ya existe, no lo duplica",
+     *     description="Añade un producto a la wishlist del usuario autenticado. Si ya existe, no lo duplica",
      *     tags={"Wishlist"},
      *     security={{"bearerAuth":{}}},
      *
@@ -115,9 +115,8 @@ class WishlistController extends Controller
      *         required=true,
      *
      *         @OA\JsonContent(
-     *             required={"user_id", "producto_id"},
+     *             required={"producto_id"},
      *
-     *             @OA\Property(property="user_id", type="integer", example=1),
      *             @OA\Property(property="producto_id", type="integer", example=3)
      *         )
      *     ),
@@ -134,12 +133,12 @@ class WishlistController extends Controller
      *     ),
      *
      *     @OA\Response(
-     *         response=404,
-     *         description="Usuario no encontrado",
+     *         response=401,
+     *         description="No autenticado",
      *
      *         @OA\JsonContent(
      *
-     *             @OA\Property(property="error", type="string", example="Usuario no encontrado")
+     *             @OA\Property(property="error", type="string", example="No autenticado")
      *         )
      *     ),
      *
@@ -149,7 +148,7 @@ class WishlistController extends Controller
      *
      *         @OA\JsonContent(
      *
-     *             @OA\Property(property="message", type="string", example="The user_id field is required."),
+     *             @OA\Property(property="message", type="string", example="The producto_id field is required."),
      *             @OA\Property(property="errors", type="object")
      *         )
      *     )
@@ -158,14 +157,13 @@ class WishlistController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'producto_id' => 'required|exists:productos,id',
         ]);
 
-        $user = User::find($validated['user_id']);
+        $user = $request->user();
 
         if (! $user) {
-            return response()->json(['error' => 'Usuario no encontrado'], 404);
+            return response()->json(['error' => 'No autenticado'], 401);
         }
 
         $user->deseos()->syncWithoutDetaching($validated['producto_id']);
@@ -178,29 +176,19 @@ class WishlistController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/deseos/{productoId}",
+     *     path="/api/deseos/{id}",
      *     summary="Eliminar un producto de la wishlist",
-     *     description="Elimina un producto especifico de la wishlist de un usuario",
+     *     description="Elimina un producto especifico de la wishlist del usuario autenticado",
      *     tags={"Wishlist"},
      *     security={{"bearerAuth":{}}},
      *
      *     @OA\Parameter(
-     *         name="productoId",
+     *         name="id",
      *         in="path",
      *         required=true,
      *         description="ID del producto a eliminar de la wishlist",
      *
      *         @OA\Schema(type="integer", example=3)
-     *     ),
-     *
-     *     @OA\RequestBody(
-     *         required=true,
-     *
-     *         @OA\JsonContent(
-     *             required={"user_id"},
-     *
-     *             @OA\Property(property="user_id", type="integer", example=1)
-     *         )
      *     ),
      *
      *     @OA\Response(
@@ -214,40 +202,35 @@ class WishlistController extends Controller
      *     ),
      *
      *     @OA\Response(
-     *         response=404,
-     *         description="Usuario no encontrado",
+     *         response=401,
+     *         description="No autenticado",
      *
      *         @OA\JsonContent(
      *
-     *             @OA\Property(property="error", type="string", example="Usuario no encontrado")
+     *             @OA\Property(property="error", type="string", example="No autenticado")
      *         )
      *     ),
      *
      *     @OA\Response(
-     *         response=422,
-     *         description="Error de validacion",
+     *         response=404,
+     *         description="Producto no encontrado en la wishlist",
      *
      *         @OA\JsonContent(
      *
-     *             @OA\Property(property="message", type="string", example="The user_id field is required."),
-     *             @OA\Property(property="errors", type="object")
+     *             @OA\Property(property="error", type="string", example="Producto no encontrado en la wishlist")
      *         )
      *     )
      * )
      */
-    public function destroy(Request $request, string $productoId)
+    public function destroy(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-        ]);
-
-        $user = User::find($validated['user_id']);
+        $user = $request->user();
 
         if (! $user) {
-            return response()->json(['error' => 'Usuario no encontrado'], 404);
+            return response()->json(['error' => 'No autenticado'], 401);
         }
 
-        $user->deseos()->detach($productoId);
+        $user->deseos()->detach($id);
 
         return response()->json([
             'mensaje' => 'Producto eliminado de la wishlist',

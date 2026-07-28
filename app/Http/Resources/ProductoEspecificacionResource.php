@@ -19,8 +19,18 @@ class ProductoEspecificacionResource extends JsonResource
             'producto_id' => $this->producto_id,
             'especificacion_id' => $this->especificacion_id,
             'valor' => $this->valor,
-            'producto' => new ProductoResource($this->producto),
-            'especificacion' => new EspecificacionResource($this->especificacion),
+            'producto' => $this->whenLoaded('producto', function () {
+                return [
+                    'id' => $this->producto->id,
+                    'nombre' => $this->producto->nombre,
+                ];
+            }),
+            'especificacion' => $this->whenLoaded('especificacion', function () {
+                return [
+                    'id' => $this->especificacion->id,
+                    'nombre' => $this->especificacion->nombre,
+                ];
+            }),
         ];
     }
 }

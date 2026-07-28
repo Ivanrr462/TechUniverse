@@ -17,7 +17,7 @@ class WishlistResource extends JsonResource
         return [
             'id' => $this->id,
             'nombre' => $this->name,
-            'email' => $this->email,
+            'correo' => $this->email,
             'desea' => ProductoResource::collection($this->whenLoaded('deseos')),
         ];
     }

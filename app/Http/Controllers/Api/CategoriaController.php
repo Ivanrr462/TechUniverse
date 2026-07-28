@@ -158,13 +158,13 @@ class CategoriaController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/categoria/{id}",
+     *     path="/api/categoria/{categoria}",
      *     summary="Obtener una categoria por ID",
      *     description="Retorna una categoria especifica con sus productos",
      *     tags={"Categorias"},
      *
      *     @OA\Parameter(
-     *         name="id",
+     *         name="categoria",
      *         in="path",
      *         required=true,
      *         description="ID de la categoria",
@@ -207,14 +207,14 @@ class CategoriaController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/categoria/{id}",
+     *     path="/api/categoria/{categoria}",
      *     summary="Actualizar una categoria",
      *     description="Actualiza el nombre de una categoria existente",
      *     tags={"Categorias"},
      *     security={{"bearerAuth":{}}},
      *
      *     @OA\Parameter(
-     *         name="id",
+     *         name="categoria",
      *         in="path",
      *         required=true,
      *         description="ID de la categoria a actualizar",
@@ -287,14 +287,14 @@ class CategoriaController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/categoria/{id}",
+     *     path="/api/categoria/{categoria}",
      *     summary="Eliminar una categoria",
      *     description="Elimina una categoria por su ID",
      *     tags={"Categorias"},
      *     security={{"bearerAuth":{}}},
      *
      *     @OA\Parameter(
-     *         name="id",
+     *         name="categoria",
      *         in="path",
      *         required=true,
      *         description="ID de la categoria a eliminar",

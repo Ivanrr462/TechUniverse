@@ -31,7 +31,7 @@ class CestaApiTest extends TestCase
             ->assertJsonStructure([
                 'data' => [
                     'id',
-                    'usuario' => ['id', 'nombre', 'email'],
+                    'usuario' => ['id', 'nombre', 'correo'],
                     'productos',
                     'precio_total',
                     'cantidad_total',
@@ -44,7 +44,7 @@ class CestaApiTest extends TestCase
             ->assertJsonPath('data.productos.0.precioDescuento', 100)
             ->assertJsonPath('data.productos.0.cantidad', 2)
             ->assertJsonPath('data.productos.0.subtotal', 200)
-            ->assertJsonPath('data.usuario.email', $user->email);
+            ->assertJsonPath('data.usuario.correo', $user->email);
     }
 
     public function test_puede_ver_cesta_con_descuento()

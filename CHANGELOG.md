@@ -6,6 +6,23 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.
 
 ---
 
+## [1.3.0]
+
+### ✨ Añadido
+- Mejoras en los endpoints y recursos de productos, categorías, carrito y wishlist.
+- Ajustes en la documentación Swagger y en la respuesta de la API.
+
+### 🔧 Cambiado
+- Refactor y limpieza de controladores y recursos para un backend más consistente.
+- Mejoras en las pruebas de API y eliminación de tests redundantes.
+- Simplificación de componentes administrativos y limpieza de código obsoleto.
+
+### 🐛 Corregido
+- Correcciones de calidad de código y ajustes de lint.
+- Optimización de la estructura interna para facilitar mantenimiento y escalabilidad.
+
+---
+
 ## [1.2.0]
 
 ### ✨ Añadido

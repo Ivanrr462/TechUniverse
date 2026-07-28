@@ -22,7 +22,7 @@ use Illuminate\Http\Request;
  *         type="object",
  *         @OA\Property(property="id", type="integer", example=1),
  *         @OA\Property(property="nombre", type="string", example="Juan Garcia"),
- *         @OA\Property(property="email", type="string", format="email", example="juan@example.com")
+ *         @OA\Property(property="correo", type="string", format="email", example="juan@example.com")
  *     ),
  *     @OA\Property(
  *         property="productos",

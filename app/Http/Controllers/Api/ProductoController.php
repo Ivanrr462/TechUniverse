@@ -264,7 +264,7 @@ class ProductoController extends Controller
      *                 required={"nombre", "precio", "categoria_id", "foto"},
      *
      *                 @OA\Property(property="nombre", type="string", maxLength=255, example="Laptop Gaming"),
-     *                 @OA\Property(property="precio", type="integer", minimum=1, example=1500),
+     *                 @OA\Property(property="precio", type="number", format="float", minimum=0.01, example=1500.00),
      *                 @OA\Property(property="descripcion", type="string", maxLength=255, nullable=true, example="Descripción opcional"),
      *                 @OA\Property(property="categoria_id", type="integer", minimum=1, example=2),
      *                 @OA\Property(property="foto", type="string", format="binary", description="Imagen del producto (máx. 4MB)")
@@ -323,10 +323,10 @@ class ProductoController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      *     path="/api/productos/{id}",
      *     summary="Actualizar un producto",
-     *     description="Actualiza los datos de un producto. Se usa POST con _method=PUT por compatibilidad con multipart/form-data",
+     *     description="Actualiza los datos de un producto",
      *     tags={"Productos"},
      *     security={{"bearerAuth":{}}},
      *
@@ -347,9 +347,8 @@ class ProductoController extends Controller
      *
      *             @OA\Schema(
      *
-     *                 @OA\Property(property="_method", type="string", default="PUT", description="Spoofing de método HTTP"),
      *                 @OA\Property(property="nombre", type="string", maxLength=255, nullable=true, example="Laptop Pro"),
-     *                 @OA\Property(property="precio", type="integer", minimum=1, nullable=true, example=2000),
+     *                 @OA\Property(property="precio", type="number", format="float", minimum=0.01, nullable=true, example=2000.00),
      *                 @OA\Property(property="descripcion", type="string", maxLength=255, nullable=true, example="Nueva descripción"),
      *                 @OA\Property(property="categoria_id", type="integer", minimum=1, nullable=true, example=3),
      *                 @OA\Property(property="stock", type="integer", minimum=0, nullable=true, example=10),

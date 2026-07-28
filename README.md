@@ -108,21 +108,20 @@ Cada versión refleja nuevas funcionalidades, mejoras internas y cambios en la a
 
 ---
 
-### 🟦 Versión **1.2.0** (actual)
+### 🟦 Versión **1.3.0** (actual)
 
 #### ✨ Novedades principales
-- Panel administrativo renovado con acceso mejorado y gestión de ofertas.
-- Endpoint de ofertas para obtener promociones activas en productos.
-- Descuentos dinámicos aplicables a productos desde el backend.
-- Mejoras en carga de imágenes, seeder actualizado con nuevas fotos y placeholders.
+- Mejoras en los endpoints y recursos de productos, categorías, carrito y wishlist.
+- Ajustes en la documentación Swagger y en la respuesta de la API.
+- Refactor y limpieza de controladores y recursos para un backend más consistente.
+- Mejoras en las pruebas de API y eliminación de tests redundantes.
 
 #### 🔧 Mejoras internas
-- Correcciones de Swagger y recursos API.
-- Ajustes de lint y calidad de código.
-- Refactor de recursos y ajustes en pruebas.
+- Correcciones de calidad de código y ajustes de lint.
+- Simplificación de componentes administrativos y limpieza de código obsoleto.
+- Optimización de la estructura interna para facilitar mantenimiento y escalabilidad.
 
 ---
-
 
 ## 🏗️ Estructura del Proyecto
 
