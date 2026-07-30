@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /cuenta
+Disallow: /carrito
+Disallow: /wishlist
