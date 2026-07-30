@@ -15,7 +15,6 @@ import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OfertasRouteImport } from './routes/ofertas'
 import { Route as RegistroRouteImport } from './routes/registro'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedCarritoRouteImport } from './routes/_authenticated.carrito'
 import { Route as AuthenticatedCuentaRouteImport } from './routes/_authenticated.cuenta'
 import { Route as AuthenticatedWishlistRouteImport } from './routes/_authenticated.wishlist'
@@ -51,11 +50,6 @@ const RegistroRoute = RegistroRouteImport.update({
   path: '/registro',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedCarritoRoute = AuthenticatedCarritoRouteImport.update({
   id: '/carrito',
   path: '/carrito',
@@ -88,7 +82,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/ofertas': typeof OfertasRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/carrito': typeof AuthenticatedCarritoRoute
   '/cuenta': typeof AuthenticatedCuentaRoute
   '/wishlist': typeof AuthenticatedWishlistRoute
@@ -101,7 +94,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/ofertas': typeof OfertasRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/carrito': typeof AuthenticatedCarritoRoute
   '/cuenta': typeof AuthenticatedCuentaRoute
   '/wishlist': typeof AuthenticatedWishlistRoute
@@ -116,7 +108,6 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/ofertas': typeof OfertasRoute
   '/registro': typeof RegistroRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/carrito': typeof AuthenticatedCarritoRoute
   '/_authenticated/cuenta': typeof AuthenticatedCuentaRoute
   '/_authenticated/wishlist': typeof AuthenticatedWishlistRoute
@@ -131,7 +122,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/ofertas'
     | '/registro'
-    | '/sitemap.xml'
     | '/carrito'
     | '/cuenta'
     | '/wishlist'
@@ -144,7 +134,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/ofertas'
     | '/registro'
-    | '/sitemap.xml'
     | '/carrito'
     | '/cuenta'
     | '/wishlist'
@@ -158,7 +147,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/ofertas'
     | '/registro'
-    | '/sitemap.xml'
     | '/_authenticated/carrito'
     | '/_authenticated/cuenta'
     | '/_authenticated/wishlist'
@@ -173,7 +161,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   OfertasRoute: typeof OfertasRoute
   RegistroRoute: typeof RegistroRoute
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ProductosIdRoute: typeof ProductosIdRoute
   ProductosIndexRoute: typeof ProductosIndexRoute
 }
@@ -220,13 +207,6 @@ declare module '@tanstack/react-router' {
       path: '/registro'
       fullPath: '/registro'
       preLoaderRoute: typeof RegistroRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/carrito': {
@@ -290,20 +270,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   OfertasRoute: OfertasRoute,
   RegistroRoute: RegistroRoute,
-  SitemapDotxmlRoute: SitemapDotxmlRoute,
   ProductosIdRoute: ProductosIdRoute,
   ProductosIndexRoute: ProductosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

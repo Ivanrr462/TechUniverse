@@ -1,17 +1,12 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Toaster } from "sonner";
-
-import appCss from "../styles.css?url";
-
 
 function NotFoundComponent() {
   return (
@@ -84,22 +79,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Descubre el catálogo TechUniverse: smartphones, portátiles, audio y televisores con ofertas exclusivas y garantía oficial.",
       },
-      { property: "og:title", content: "TechUniverse — Tecnología premium con envío rápido" },
-      {
-        property: "og:description",
-        content: "Descubre el catálogo TechUniverse: smartphones, portátiles, audio y televisores con ofertas exclusivas y garantía oficial.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "TechUniverse — Tecnología premium con envío rápido" },
-      { name: "twitter:description", content: "Descubre el catálogo TechUniverse: smartphones, portátiles, audio y televisores con ofertas exclusivas y garantía oficial." },
-      { property: "og:image", content: "/logo.png" },
-      { name: "twitter:image", content: "/logo.png" },
     ],
     links: [
       { rel: "icon", href: "/logo.png" },
-      { rel: "apple-touch-icon", href: "/logo.png" },
-      { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -108,35 +90,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
 
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="es">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+    <>
       <Outlet />
       <Toaster position="top-right" richColors closeButton />
-    </QueryClientProvider>
+    </>
   );
 }
-
