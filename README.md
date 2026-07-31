@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-%2306B6D4.svg?style=for-the-badge&logo=tailwindcss&logoColor=white">
   <img src="https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white">
   <br />
-  <img src="https://img.shields.io/badge/TanStack_Start-%23FF4154.svg?style=for-the-badge&logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/Vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white">
   <img src="https://img.shields.io/badge/Zustand-%23E34F26.svg?style=for-the-badge&logo=&logoColor=white">
 </div>
 
@@ -19,7 +19,7 @@ Aplicación completa de e-commerce de tecnología dividida en dos partes:
 | Carpeta | Tecnología | Descripción |
 |---------|-----------|-------------|
 | [`backend/`](./backend) | Laravel 11 + PHP 8 + MySQL | API REST con autenticación Sanctum, panel admin FilamentPHP y documentación Swagger |
-| [`frontend/`](./frontend) | TanStack Start + React 19 + TypeScript + Tailwind CSS v4 | SPA/SSR con catálogo, carrito, wishlist y caché local |
+| [`frontend/`](./frontend) | Vite + React 19 + TypeScript + Tailwind CSS v4 | SPA (client-side) con TanStack Router, catálogo, carrito, wishlist y caché local |
 
 ---
 
@@ -62,7 +62,7 @@ API-Ecommerce/
 │   ├── routes/
 │   │   └── api.php                 ← Definición de todos los endpoints
 │   └── ...
-├── frontend/                   # Aplicación TanStack Start
+├── frontend/                   # SPA Vite (client-side) + TanStack Router
 │   ├── src/
 │   │   ├── routes/                 ← Páginas (TanStack Router file-based)
 │   │   ├── components/             ← UI reutilizable (shadcn/ui + Radix)
@@ -71,6 +71,7 @@ API-Ecommerce/
 │   │   ├── store/                  ← Estado global (Zustand persist)
 │   │   ├── lib/                    ← API client, utilidades, caché
 │   │   └── types/                  ← Tipos TypeScript
+│   ├── vercel.json                 ← Config de deploy (Vite build + SPA rewrites)
 │   └── ...
 └── README.md
 ```

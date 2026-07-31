@@ -3,12 +3,12 @@
 <div align="center">
   <img src="https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react&logoColor=white">
   <img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/TanStack_Start-1.168-FF4154?logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/Vite-6.4-646CFF?logo=vite&logoColor=white">
   <img src="https://img.shields.io/badge/Tailwind_CSS-4.2-06B6D4?logo=tailwindcss&logoColor=white">
   <img src="https://img.shields.io/badge/Zustand-5.0-E34F26?logo=&logoColor=white">
 </div>
 
-SPA/SSR moderna para el e-commerce TechUniverse. Construida con **TanStack Start** (React 19 + Vite 8 + Nitro), renderizado híbrido cliente/servidor, y datos cacheados en localStorage para evitar llamadas API innecesarias.
+SPA (client-side) moderna para el e-commerce TechUniverse. Construida con **Vite + React 19 + TanStack Router**, renderizado 100% en el navegador, y datos cacheados en localStorage para evitar llamadas API innecesarias. Desplegada en Vercel.
 
 ---
 
@@ -22,7 +22,6 @@ SPA/SSR moderna para el e-commerce TechUniverse. Construida con **TanStack Start
 - Panel de cuenta con resumen de cesta y favoritos
 - **Caché local** — productos, categorías y detalles se almacenan en localStorage (TTL configurable)
 - Diseño responsive con animaciones
-- SSR para SEO y primera carga rápida
 
 ---
 
@@ -31,8 +30,8 @@ SPA/SSR moderna para el e-commerce TechUniverse. Construida con **TanStack Start
 | Tecnología | Versión | Uso |
 |-----------|---------|-----|
 | React | 19.2 | UI |
-| TanStack Start | 1.168 | Framework SSR + file-based routing |
-| TanStack Router | 1.170 | Enrutamiento tipado |
+| Vite | 6.4 | Bundler y dev server |
+| TanStack Router | 1.170 | Enrutamiento file-based tipado |
 | TanStack React Query | 5.101 | Fetching y caché en memoria |
 | Zustand | 5.0 | Estado global (auth persistido) |
 | Tailwind CSS | 4.2 | Estilos |
@@ -120,13 +119,36 @@ Carrito y wishlist siempre piden datos frescos.
 ## 🏗️ Build producción
 
 ```bash
-npm run build     # Cliente + SSR + Nitro server
+npm run build     # Vite build → dist/
 npx vite preview  # Preview local
 ```
 
-El build genera:
-- `.output/public/` → assets estáticos
-- `.output/server/` → servidor Nitro (Cloudflare Module)
+El build genera `dist/` con los assets estáticos (JS, CSS e imágenes).
+
+---
+
+## 🚀 Deploy en Vercel
+
+El proyecto está configurado para desplegarse en Vercel usando el archivo `vercel.json`:
+
+```json
+{
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+Pasos:
+
+1. En el dashboard de Vercel, conecta el repositorio y configura:
+   - **Root Directory** → `frontend/`
+   - **Framework Preset** → `Vite`
+   - **Build Command** → `vite build`
+   - **Output Directory** → `dist`
+2. Vercel genera los assets y sirve `index.html` para todas las rutas (rewrite SPA), permitiendo el routing de TanStack Router en el cliente.
+
+> ⚠️ Importante: el directorio `.vercel/` (build output de deploys previos) está en `.gitignore` y no debe committearse, ya que Vercel lo usaría como output final en lugar del `dist/` generado por `vite build`.
 
 ---
 
@@ -147,3 +169,4 @@ El build genera:
 - El backend ya incluye su propio panel de administración (FilamentPHP). Este frontend se enfoca en la experiencia de tienda para el usuario final.
 - Las rutas protegidas (`/carrito`, `/wishlist`, `/cuenta`) redirigen a `/login` si no hay sesión.
 - La caché se invalida automáticamente al expirar el TTL; también se puede borrar manualmente con `clearCache()` desde consola.
+- Este proyecto no usa SSR: es una SPA que renderiza todo en el cliente, así que el SEO se gestiona con los meta tags definidos en las rutas.
