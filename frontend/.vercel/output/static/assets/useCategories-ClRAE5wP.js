@@ -1,1 +1,0 @@
-import{g as e,s as t}from"./Layout-Bu8pxQuB.js";import{a as n,o as r,s as i}from"./useProducts-T89IG-cb.js";var a=`categorias`,o=3600*1e3;async function s(){let e=n(a,o);if(e)return e;let{data:i}=await t.get(`/categoria`),s=i.data;return r(a,s),s}var c=i({queryKey:[`categorias`],queryFn:s,staleTime:600*1e3});function l(){return e(c)}export{l as t};
